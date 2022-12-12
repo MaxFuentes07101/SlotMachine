@@ -4,41 +4,29 @@ import time
 # Function to simulate a single spin of the slots
 def spin_slots():
   # Generate 3 random numbers between 0 and 9
-  slots = []
-  for i in range(3):
-    slots.append(random.randint(0, 9))
-
+  slots = [random.randint(0, 9) for _ in range(3)]
   return slots
 
 
 # Function to check if the player has won
 def check_win(slots):
   # Check if any five or more of the numbers are the same
+  slot_multipliers = {
+    0: 0.70,
+    1: 0.80,
+    2: 0.90,
+    3: 1.00,
+    4: 1.00,
+    5: 1.20,
+    6: 1.40,
+    7: 1.60,
+    8: 1.80,
+    9: 2.00
+  }
+
   for slot in slots:
     if slots.count(slot) >= 2:
-      # Apply the appropriate multiplier to the player's winnings
-      if slot == 0:
-        multiplier = 0.50
-      elif slot == 1:
-        multiplier = 0.70
-      elif slot == 2:
-        multiplier = 0.90
-      elif slot == 3:
-        multiplier = 1.00
-      elif slot == 4:
-        multiplier = 1.00
-      elif slot == 5:
-        multiplier = 1.00
-      elif slot == 6:
-        multiplier = 1.20
-      elif slot == 7:
-        multiplier = 1.30
-      elif slot == 8:
-        multiplier = 1.40
-      elif slot == 9:
-        multiplier = 1.50
-
-      return multiplier
+      return slot_multipliers.get(slot, 1.0)
   return False
 
 
@@ -90,9 +78,6 @@ def play_slots(balance, bet):
 
   # Return the player's new balance
   return balance
-
-
-
 
 # Function to create a user interface for the game
 def game_ui():
